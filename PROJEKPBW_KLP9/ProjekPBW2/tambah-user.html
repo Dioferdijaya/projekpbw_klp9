@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tambah Orang</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Tambah User</h1>
+  </header>
+
+  <main>
+    <form id="userForm">
+      <label>Upload Foto:</label><br/>
+      <input type="file" id="photoInput" accept="image/*" required><br/>
+      <label>Nama:</label><br/>
+      <input type="text" id="nameInput" required><br/>
+      <label>Deskripsi:</label><br/>
+      <textarea id="descInput" required></textarea><br/>
+      <button type="submit">Simpan</button>
+    </form>
+  </main>
+
+  <script src="tambah.js"></script>
+</body>
+</html>

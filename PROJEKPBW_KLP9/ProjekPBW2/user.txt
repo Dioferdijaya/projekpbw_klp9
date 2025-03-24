@@ -1,0 +1,3 @@
+user@gmail.com,Password1,user
+admin@gmail.com,Admin123,admin
+

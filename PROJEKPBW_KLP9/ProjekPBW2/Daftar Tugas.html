@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Tugas - Dark Theme</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6d5dfc;
+            --primary-dark: #5a4de6;
+            --secondary: #b44bff;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --card-hover: #252525;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent: #8742ff;
+            --success: #00c896;
+            --info: #00a8ff;
+            --warning: #ffd43b;
+            --danger: #ff5252;
+            --border: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #222, #131313);
+            border-bottom: 1px solid var(--border);
+            color: white;
+            padding: 1em 2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .navbar h2 {
+            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: var(--accent);
+        }
+        
+        .navbar h2 i {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            padding: 0.6em 1.2em;
+            background-color: rgba(109, 93, 252, 0.2);
+            color: var(--text-primary);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 2em auto;
+            padding: 0 2em;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.8em;
+            margin-bottom: 1.5em;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            background-color: var(--card-hover);
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1em;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5em;
+            position: relative;
+        }
+        
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        /* Task list specific styles */
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .task-item {
+            margin-bottom: 1em;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            padding: 1em;
+            background-color: #252525;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            cursor: pointer;
+        }
+        
+        .task-header:hover {
+            background-color: #2a2a2a;
+            transform: translateX(5px);
+        }
+        
+        .task-header i {
+            margin-right: 12px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .task-header .expand-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .task-header.active .expand-icon {
+            transform: rotate(180deg);
+        }
+        
+        .task-content {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 8px 8px;
+            margin-top: -5px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .task-content.active {
+            padding: 1.2em;
+            max-height: 500px;
+            margin-bottom: 1em;
+        }
+        
+        .task-detail {
+            padding: 0.8em;
+            border-bottom: 1px solid #333;
+        }
+        
+        .task-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .task-detail h4 {
+            margin-bottom: 0.5em;
+            color: var(--info);
+        }
+        
+        .task-detail p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5em;
+        }
+        
+        .task-badge {
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 0.5em;
+        }
+        
+        .badge-completed {
+            background-color: rgba(0, 200, 150, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .badge-in-progress {
+            background-color: rgba(0, 168, 255, 0.2);
+            color: var(--info);
+            border: 1px solid var(--info);
+        }
+        
+        .badge-admin {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+        
+        /* Theme toggle button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(109, 93, 252, 0.4);
+            z-index: 1000;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Navigation buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 1em;
+            margin-bottom: 2em;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2><i class="fas fa-clipboard-list"></i> Daftar Tugas</h2>
+        <a href="user.html" class="btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    </div>
+    
+    <div class="content">
+        <div class="nav-buttons">
+            <a href="user.html" class="btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+
+            <a href="#" class="btn" id="markAllButton"><i class="fas fa-check-double"></i> Tandai Semua Selesai</a>
+        </div>
+        
+        <div class="card">
+            <h3>Daftar Tugas Tim Pengembangan</h3>
+            <ul class="task-list">
+                <li class="task-item">
+                    <div class="task-header" data-toggle="task-1">
+                        <i class="fas fa-user"></i>
+                        <span>Farhan Mujiburrahman</span>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="task-content" id="task-1">
+                        <div class="task-detail">
+                            <h4>Membuat Halaman dashboard user untuk melihat data sesuai peran masing-masing</h4>
+                            <p>Mengembangkan tampilan dashboard yang memungkinkan pengguna melihat data spesifik berdasarkan peran yang dimiliki dalam sistem.</p>
+                            <p>Target Selesai: 26 Maret 2025</p>
+                            <span class="task-badge badge-completed">Selesai</span>
+                        </div>
+                    </div>
+                </li>
+                
+                <li class="task-item">
+                    <div class="task-header" data-toggle="task-2">
+                        <i class="fas fa-user"></i>
+                        <span>Muhammad Sidqi Alfareza</span>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="task-content" id="task-2">
+                        <div class="task-detail">
+                            <h4>Membuat Fitur tambah user untuk menambahkan pengguna baru (khusus admin)</h4>
+                            <p>Mengembangkan formulir dan proses backend untuk memungkinkan admin menambahkan pengguna baru ke sistem.</p>
+                            <p>Target Selesai: 28 Maret 2025</p>
+                            <span class="task-badge badge-admin">Admin Only</span>
+                            <span class="task-badge badge-completed">Selesai</span>
+                        </div>
+                        <div class="task-detail">
+                            <h4>Membuat Halaman dashboard admin untuk mengelola data pengguna</h4>
+                            <p>Merancang dan mengimplementasikan dashboard admin dengan fungsionalitas pengelolaan pengguna yang komprehensif.</p>
+                            <p>Target Selesai: 30 Maret 2025</p>
+                            <span class="task-badge badge-admin">Admin Only</span>
+                            <span class="task-badge badge-completed">Selesai</span>
+                        </div>
+                    </div>
+                </li>
+                
+                <li class="task-item">
+                    <div class="task-header" data-toggle="task-3">
+                        <i class="fas fa-user"></i>
+                        <span>Dio Ferdi Jaya</span>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="task-content" id="task-3">
+                        <div class="task-detail">
+                            <h4>Membuat halaman login dan signup untuk autentikasi pengguna</h4>
+                            <p>Mengembangkan halaman login dan pendaftaran dengan validasi input dan integrasi dengan sistem autentikasi.</p>
+                            <p>Target Selesai: 25 Maret 2025</p>
+                            <span class="task-badge badge-completed">Selesai</span>
+                        </div>
+                    </div>
+                </li>
+                
+                <li class="task-item">
+                    <div class="task-header" data-toggle="task-4">
+                        <i class="fas fa-user"></i>
+                        <span>Teuku Hafiz Izham</span>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="task-content" id="task-4">
+                        <div class="task-detail">
+                            <h4>Membuat Fitur ubah profil untuk memperbarui informasi pengguna</h4>
+                            <p>Merancang halaman dan fungsi untuk memungkinkan pengguna mengubah dan memperbarui informasi profil mereka.</p>
+                            <p>Target Selesai: 27 Maret 2025</p>
+                            <span class="task-badge badge-completed">Selesai</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <button class="theme-toggle" title="Ubah Tema">
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle task details
+            const taskHeaders = document.querySelectorAll('.task-header');
+            
+            taskHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const taskId = this.getAttribute('data-toggle');
+                    const taskContent = document.getElementById(taskId);
+                    
+                    // Toggle active class on content
+                    taskContent.classList.toggle('active');
+                    
+                    // Toggle active class on header for icon rotation
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Mark all tasks as complete functionality
+            const markAllButton = document.getElementById('markAllButton');
+            
+            markAllButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // In a real app, this would make API calls to update task status
+                alert('Semua tugas telah ditandai sebagai selesai!');
+            });
+            
+            // Theme toggle functionality (just for demonstration)
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            themeToggle.addEventListener('click', function() {
+                // In a real implementation, this would toggle between light/dark themes
+                alert('Tombol ini akan mengubah tema antara mode gelap dan terang.');
+            });
+        });
+    </script>
+</body>
+</html>

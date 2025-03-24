@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ubah Profil</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Ubah Profil</h1>
+    <div class="navbar">
+      <a href="user.html" class="btn"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+  </div>
+  </header>
+
+  <main>
+    <form id="userForm">
+      <label>Upload Foto:</label><br/>
+      <input type="file" id="photoInput" accept="image/*"><br/>
+      <label>Nama:</label><br/>
+      <input type="text" id="nameInput" required><br/>
+      <label>Deskripsi:</label><br/>
+      <textarea id="descInput" required></textarea><br/>
+      <button type="submit">Simpan</button>
+    </form>
+    <button id="backButton">Kembali ke Halaman Utama</button>
+  </main>
+
+  <script src="ubah.js"></script>
+</body>
+</html>
